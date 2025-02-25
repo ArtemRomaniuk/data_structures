@@ -3,26 +3,34 @@ class Queue {
         this.items = [];
     }
 
-    addToQueue(el) {
+    add(el) {
         this.items.push(el);
     }
 
-    removeFromQueue() {
+    remove() {
         if (this.items.length === 0) {
             console.log("Черга пуста!");
         }
         return this.items.shift();
     }
 
-    firstOut() {
+    clear() {
+        this.items = [];
+    }
+
+    peekFirst() {
         if (this.items.length === 0) {
             console.log("Черга пуста!");
         }
         return this.items[0];
     }
 
-    clear() {
-        this.items = [];
+    peek(index) {
+        return this.items[index];
+    }
+
+    indexOf(el) {
+        return this.items.indexOf(el);
     }
 
     testShow() {
@@ -31,15 +39,17 @@ class Queue {
 }
 
 let queue = new Queue();
-queue.addToQueue(10);
-queue.addToQueue(20);
-queue.addToQueue(30);
-queue.addToQueue(40);
+queue.add(10);
+queue.add(20);
+queue.add(30);
+queue.add(40);
 queue.testShow();
-console.log(queue.removeFromQueue());
-queue.removeFromQueue();
+console.log(queue.remove());
+queue.remove();
 queue.testShow();
-console.log(queue.firstOut());
+console.log(queue.peekFirst());
+console.log(queue.peek(1));
+queue.add(12);
 queue.testShow();
 queue.clear();
 queue.testShow();
