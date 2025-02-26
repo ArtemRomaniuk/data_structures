@@ -6,9 +6,11 @@ class Node {
 }
 
 class SingleLinkedList {
+	#size;
+
 	constructor() {
 		this.head = null;
-		this.size = 0;
+		this.#size = 0;
 	}
 
 	add(value) {
@@ -22,7 +24,7 @@ class SingleLinkedList {
 			}
 			current.next = node;
 		}
-		this.size++;
+		this.#size++;
 	}
 
 	removeByValue(value) {
@@ -33,13 +35,13 @@ class SingleLinkedList {
 		}
 		if (current.value === value) {
 			this.head = this.head.next;
-			this.size--;
+			this.#size--;
 			return;
 		}
 		while (current.next) {
 			if (current.next.value === value) {
 				current.next = current.next.next;
-				this.size--;
+				this.#size--;
 				return;
 			} else {
 				current = current.next
@@ -56,13 +58,13 @@ class SingleLinkedList {
 		}
 		if (index === 0) {
 			this.head = this.head.next;
-			this.size--;
+			this.#size--;
 			return;
 		}
-		for (let i = 0; i < this.size - 1; i++) {
+		for (let i = 0; i < this.#size - 1; i++) {
 			if (i + 1 === index) {
 				current.next = current.next.next;
-				this.size--;
+				this.#size--;
 				return;
 			} else {
 				current = current.next;
@@ -73,11 +75,16 @@ class SingleLinkedList {
 
 	clear() {
 		this.head = null;
+		this.#size = 0;
+	}
+
+	get size() {
+		return this.#size;
 	}
 
 	peek(index) {
 		let current = this.head;
-		for (let i = 0; i < this.size; i++) {
+		for (let i = 0; i < this.#size; i++) {
 			if (i === index) {
 				return current.value;
 			} else {
@@ -89,7 +96,7 @@ class SingleLinkedList {
 
 	indexOf(value) {
 		let current = this.head;
-		for (let i = 0; i < this.size; i++) {
+		for (let i = 0; i < this.#size; i++) {
 			if (current.value === value) {
 				return i;
 			} else {
@@ -112,12 +119,16 @@ class SingleLinkedList {
 let sll = new SingleLinkedList();
 sll.removeByIndex(5)
 sll.removeByValue(5)
+console.log("Розмір списку: " + sll.size);
+sll.size = 5;
+console.log("Розмір списку: " + sll.size);
 sll.add(5);
 sll.add(15);
 sll.add(25);
 sll.add(35);
 sll.add(45);
 sll.testShow();
+console.log("Розмір списку: " + sll.size);
 sll.removeByValue(25);
 sll.removeByValue(214);
 sll.testShow();
@@ -126,5 +137,7 @@ console.log("Індекс елементу з значенням 45: " + sll.ind
 sll.removeByIndex(2);
 sll.removeByIndex(-1);
 sll.testShow();
+console.log("Розмір списку: " + sll.size);
 sll.clear();
 sll.testShow();
+console.log("Розмір списку: " + sll.size);
