@@ -11,6 +11,10 @@ class Graph {
     constructor() {
 
     }
+
+    print() {
+
+    }
 }
 
 let graph = new Graph(adjacencyMatrix, vertexes);
