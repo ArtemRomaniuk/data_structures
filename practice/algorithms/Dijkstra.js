@@ -65,70 +65,42 @@ class Graph {
         return false;
     }
 
-    DijkstraAlgorithm(v) {
-        let distances = {};
-        let previous = {};
+    DijkstraAlgorithm(v1, v2 = null) {
+        let distance = {};
+        let route = {};
         let nodes = [];
 
         for (let vertex in this.adjacencyList) {
-            distances[vertex] = Infinity;
-            previous[vertex] = null;
+            distance[vertex] = Infinity;
+            route[vertex] = [];
             nodes.push(vertex);
         }
-        distances[v] = 0;
+        distance[v1] = 0;
 
         while (nodes.length > 0) {
-            nodes.sort((a, b) => distances[a] - distances[b]);
+            nodes.sort((a, b) => distance[a] - distance[b]);
             let closest = nodes.shift();
 
-            if (distances[closest] === Infinity) break;
+            if (distance[closest] === Infinity) break;
 
             for (let neighbour in this.adjacencyList[closest]) {
-                let newDistance = distances[closest] + this.adjacencyList[closest][neighbour];
+                let newDistance = distance[closest] + this.adjacencyList[closest][neighbour];
 
-                if (newDistance < distances[neighbour]) {
-                    distances[neighbour] = newDistance;
-                    if (!previous[neighbour]) previous[neighbour] = [];
-                    previous[neighbour].push(closest);
+                if (newDistance < distance[neighbour]) {
+                    distance[neighbour] = newDistance;
+                    route[neighbour] = [...route[closest], closest];
                 }
             }
         }
 
-        return { distances, previous };
-    }
-
-    DijkstraRoute(v1, v2) {
-        let distances = {};
-        let previous = {};
-        let nodes = [];
-
-        for (let vertex in this.adjacencyList) {
-            distances[vertex] = Infinity;
-            previous[vertex] = null;
-            nodes.push(vertex);
+        if (v2 === null) {
+            return { distances: distance, routes: route };
+        } else {
+            return { distance: distance[v2], route: route[v2] };
         }
-        distances[v1] = 0;
-
-        while (nodes.length > 0) {
-            nodes.sort((a, b) => distances[a] - distances[b]);
-            let closest = nodes.shift();
-
-            if (distances[closest] === Infinity) break;
-
-            for (let neighbour in this.adjacencyList[closest]) {
-                let newDistance = distances[closest] + this.adjacencyList[closest][neighbour];
-
-                if (newDistance < distances[neighbour]) {
-                    distances[neighbour] = newDistance;
-                    if (!previous[neighbour]) previous[neighbour] = [];
-                    previous[neighbour].push(closest);
-                }
-            }
-        }
-
-        return { distance: distances[v2], route: previous[v2] };
     }
 }
+
 
 
 
@@ -147,8 +119,8 @@ graph.print();
 
 let resultV_1 = graph.DijkstraAlgorithm("V_1");
 console.log(resultV_1.distances);
-console.log(resultV_1.previous);
+console.log(resultV_1.routes);
 
-let resultV1_V2 = graph.DijkstraRoute("V_1", "V_2");
+let resultV1_V2 = graph.DijkstraAlgorithm("V_1", "V_2");
 console.log("\n" + resultV1_V2.distance);
 console.log(resultV1_V2.route);
