@@ -40,6 +40,14 @@ class HashTable {
         }
     }
 
+    contains(key) {
+        let index = this.#hashFunction(key);
+        for (let pair of this.#hashTable[index]) {
+            if (pair[0] === key) return true
+        }
+        return false;
+    }
+
     getValue(key) {
         let index = this.#hashFunction(key);
         for (let pair of this.#hashTable[index]) {
@@ -64,3 +72,4 @@ table.remove("3")
 table.add("apple", 50)
 table.print()
 console.log(table.getValue(3))
+console.log(table.contains("apple"));
