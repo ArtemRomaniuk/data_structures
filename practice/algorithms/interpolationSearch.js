@@ -9,7 +9,7 @@ function interpolationSearch(sortedArr, element) {
         if (element > sortedArr[mid]) low = mid + 1;
         if (element < sortedArr[mid]) high = mid - 1;
     }
-    return -1
+    return -1;
 }
 
 console.log(interpolationSearch([10, 22, 35, 40, 50], 35));
